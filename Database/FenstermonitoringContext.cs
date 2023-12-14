@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using FenstermonitoringAPI.Models;
+﻿using Server.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FenstermonitoringAPI.Database;
+namespace Server.Database;
 
 public partial class FenstermonitoringContext : DbContext
 {
-    public FenstermonitoringContext()
-    {
-    }
-
     public FenstermonitoringContext(DbContextOptions<FenstermonitoringContext> options)
         : base(options)
     {
@@ -22,7 +16,7 @@ public partial class FenstermonitoringContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySql("Name=ConnectionStrings:DefaultConnection", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.34-mysql"));
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,7 +32,8 @@ public partial class FenstermonitoringContext : DbContext
             entity.ToTable("devices");
 
             entity.Property(e => e.Deviceid)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
+                //.ValueGeneratedNever()
                 .HasColumnName("deviceid");
             entity.Property(e => e.Batterylevel)
                 .HasPrecision(3, 2)
@@ -60,9 +55,7 @@ public partial class FenstermonitoringContext : DbContext
 
             entity.ToTable("states");
 
-            entity.Property(e => e.Stateid)
-                .ValueGeneratedNever()
-                .HasColumnName("stateid");
+            entity.Property(e => e.Stateid).ValueGeneratedOnAdd().HasColumnName("stateid");
             entity.Property(e => e.Deviceid).HasColumnName("deviceid");
             entity.Property(e => e.Statevalue).HasColumnName("statevalue");
             entity.Property(e => e.Timestamp)

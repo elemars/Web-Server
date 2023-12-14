@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FenstermonitoringAPI.Models;
+namespace Server.Models;
 
 public partial class Device
 {
-    public int Deviceid { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Deviceid { get; set; } = default;
 
     public string Location { get; set; } = null!;
 
@@ -14,4 +16,6 @@ public partial class Device
     public decimal? Batterylevel { get; set; }
 
     public string Macadress { get; set; } = null!;
+
+    public int Laststate { get; set; } = 4;
 }
