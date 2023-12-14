@@ -10,8 +10,6 @@ namespace Server.Mqtt
     {
         private static readonly HttpClient _httpClient = new();
         private static readonly TokenService _tokenGenerator = new();
-        //private static readonly ITokenService _tokenService;
-        //private static readonly IHttpClientFactory _clientFactory;
 
         public static async Task HandleMessage(MqttApplicationMessageReceivedEventArgs arg)
         {
@@ -24,7 +22,6 @@ namespace Server.Mqtt
                 if (arg.ApplicationMessage.Topic == null) return;
                 // empfangene Nachricht richtig einlesen
                 var topic = arg.ApplicationMessage.Topic;
-                //var payloadString = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
                 var payloadString = Encoding.UTF8.GetString(arg.ApplicationMessage.Payload);
                 dynamic payload = JObject.Parse(payloadString); //JSON Format aus String lesen
                 // Ausgabe zum Testen

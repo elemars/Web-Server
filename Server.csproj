@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\AuthenticatedResponse.cs" />
     <Compile Remove="Startup.cs" />
+    <Compile Remove="Util\ResponseData.cs" />
   </ItemGroup>
 
   <ItemGroup>

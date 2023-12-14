@@ -58,16 +58,7 @@ namespace Server.Controllers
                 }
                 // Rollen des Benutzers abrufen
                 var roles = await GetRolesAsync(userInDb);
-                // JWT generieren
-                //            var claims = new List<Claim>
-                //            {
-                //                new Claim(ClaimTypes.Name, userInDb.Username)
-                //	// Weitere Ansprüche hinzufügen, falls erforderlich
-                //};
-                //            if (roles != null)
-                //            {
-                //                claims.Add(new Claim(ClaimTypes.Role, roles));
-                //            }
+
                 if (roles != null)
                 {
                     var token = _tokenService.GenerateLoginToken(userInDb.Username, roles);
@@ -77,24 +68,6 @@ namespace Server.Controllers
                 else
                     return Unauthorized(new { message = "Keine Rolle zugewiesen" });
             }
-
-
-
-            //if (user.Username == "johndoe" && user.Password == "def@123")
-            //{
-            //	var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Program.SecretKey));
-            //	var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            //	var tokeOptions = new JwtSecurityToken(
-            //		issuer: Program.Domain,
-            //		audience: Program.Domain,
-            //		claims: new List<Claim>(),
-            //		expires: DateTime.Now.AddMinutes(5),
-            //		signingCredentials: signinCredentials
-            //	);
-            //	var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-            //	return Ok(new AuthenticatedResponse { Token = tokenString });
-            //}
-            //return Unauthorized();
         }
 
         [HttpPost("register")]
@@ -222,39 +195,7 @@ namespace Server.Controllers
                     Console.WriteLine(ex.ToString());
                 }
             }
-
             return user.Id;
         }
-
-        //private static readonly TokenService _tokenGenerator = new();
-
-        /*
-        private ITokenService _tokenService; // Dieser Service generiert das Token.
-
-        public AccountController(ITokenService tokenService)
-        {
-            _tokenService = tokenService;
-        }
-
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] User userParam)
-        {
-            var user = AuthenticateUser(userParam.Username, userParam.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-            var tokenString = _tokenService.GenerateJWTToken(user);
-            return Ok(new { Token = tokenString });
-        }
-
-        // Diese Methode authentifiziert den Benutzer. In der Praxis würden Sie hier Ihre Datenbank abfragen.
-        private User AuthenticateUser(string username, string password)
-        {
-            // Hier authentifizieren Sie den Benutzer.
-            // Wenn die Authentifizierung erfolgreich ist, geben Sie das Benutzerobjekt zurück.
-            // Andernfalls geben Sie null zurück.
-        }
-        */
     }
 }
